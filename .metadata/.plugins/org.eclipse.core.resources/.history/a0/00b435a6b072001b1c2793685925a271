@@ -1,0 +1,26 @@
+* {
+    font-family: Verdana, Lucida Sans, Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 0px auto;
+    background-color:#222;
+}
+
+.container{
+	margin: auto;
+	height:80%
+	width: 50%;
+	border: 3px solid green;
+  	padding: 10px;
+  	background-color:blue;
+}
+
+.centerContainer{
+	
+}
+
+div{
+	font-size:10vh;
+	color:white;
+}

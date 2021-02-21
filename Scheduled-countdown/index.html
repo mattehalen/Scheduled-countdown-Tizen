@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="Scheduled-countdown"/>
+
+    <title>Scheduled-countdown</title>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>     
+</head>
+
+<body>
+  <div class=container>
+	<div class=centerContainer>
+		<div id="currentTime"></div>
+		<div id="title">Not Synced yet.</div>
+		<div id="time"></div>
+	</div>
+  </div>  
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+  <script>
+  let countDownBool;
+  let bgColor;
+  
+  	console.log(document.getElementById("currentTime").textContent);
+  	document.getElementById("currentTime").textContent = "test";
+  	
+  	const socket = io("ws://192.168.8.191:3000",{path: '/ws',});
+  	
+  	socket.on('connect', () => {
+    	console.log('SocketConnected!');
+	});
+	
+	socket.on('message', (data) => {
+    	const { type, message } = data;
+    	//console.log(type);
+    	
+    	if (type == "currentTime") {
+    		document.getElementById("currentTime").textContent = message;
+    		
+    		if (countDownBool){
+    			//style.display = "block"; style.display = "none";
+    			document.getElementById("currentTime").style.display = "none";
+    			document.getElementById("title").style.display = "block";
+	    		document.getElementById("time").style.display = "block";
+    			
+    		}else{
+    			document.getElementById("currentTime").style.display = "block";
+    			document.getElementById("title").style.display = "none";
+	    		document.getElementById("time").style.display = "none";
+    		}
+    		//console.log("currentTime");
+        	
+		}
+		
+	    if (type == "countDown") {
+	    	document.getElementById("title").textContent = message.title;
+	   	 	document.getElementById("time").textContent = message.time;
+	    	
+	    	if(message.bool){
+	    		countDownBool = true;
+	    		
+	    		
+	    		if (message.countDownTimeInMS > (-3*60000) && message.countDownTimeInMS < 0) {
+		         	bgColor = message.colors.countDownColor;
+		        }else if(message.countDownTimeInMS > 0){
+		          	bgColor = message.colors.countUpColor;
+		        }
+		        
+        		//-------------------
+			      if(message.countDownTimeInMS > (-5*60000) && message.countDownTimeInMS < (-5*60000+1000)){
+			        navigator.vibrate([100, 100, 100, 100, 100, 100, 100, 100, 100, 100]);
+			      }
+			      if(message.countDownTimeInMS > (-4*60000) && message.countDownTimeInMS < (-4*60000+1000)){
+			        navigator.vibrate([100, 100, 100, 100, 100, 100, 100, 100]);
+			      }
+			      if(message.countDownTimeInMS > (-3*60000) && message.countDownTimeInMS < (-3*60000+1000)){
+			         navigator.vibrate([100, 100, 100, 100, 100, 100]);
+			      }
+			      if(message.countDownTimeInMS > (-2*60000) && message.countDownTimeInMS < (-2*60000+1000)){
+			         navigator.vibrate([100, 100, 100, 100]);
+			      }
+			      if(message.countDownTimeInMS > (-1*60000) && message.countDownTimeInMS < (-1*60000+1000)){
+			         navigator.vibrate([100, 100]);
+			      }
+			      if(message.countDownTimeInMS > (0) && message.countDownTimeInMS < (0+1000)){
+			         navigator.vibrate([1000, 100, 1000, 100]);
+			      }
+		      	//-------------------
+		        
+	    	}else{
+	    		countDownBool = false;
+	    		document.body.style.backgroundColor = "2b2b2b";
+	    	}
+
+	    }
+	});
+		
+  	
+  	
+  
+  </script>
+</html>

@@ -1,0 +1,35 @@
+* {
+    font-family: Verdana, Lucida Sans, Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 0px auto;
+    background-color:#222;
+}
+
+.container{
+	margin: auto;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+  	height: 100vh;
+}
+
+.centerContainer{
+	text-align: center;
+}
+
+div{
+	/* font-size:10vh; */
+	color:white;
+}
+
+#currentTime{
+	font-size:25vh;
+}
+#title{
+	font-size:10vh;
+}
+#time{
+	font-size:25vh;
+}

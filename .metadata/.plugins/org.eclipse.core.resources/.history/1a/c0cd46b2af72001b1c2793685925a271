@@ -1,0 +1,15 @@
+* {
+    font-family: Verdana, Lucida Sans, Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 0px auto;
+    background-color:#222;
+}
+
+.contents {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+

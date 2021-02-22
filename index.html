@@ -12,93 +12,145 @@
 
 <body>
   <div class=container>
+  	
+  	
 	<div class=centerContainer>
+		<div id=ipInput style="height:100%">
+<!-- 		  	Storage key:
+		   <input type="text" id="storageKey" style="width: 50px"/> -->
+		   ipAdress:
+		   <input type="text" id="storageData" style="width: 50%"/>
+		   <input type="button" id="save" value="SAVE" onclick="addStorage(); return false;"/>
+		   <h1 id="ipAdress">No Save ipAdress</h1>
+	  	</div>
+	  	
+	  	
+	  	
 		<div id="currentTime"></div>
-		<div id="title">Not Synced yet.</div>
+		<div id="title"></div>
 		<div id="time"></div>
 	</div>
   </div>  
 
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-  <script>
-  let countDownBool;
-  let bgColor;
-
-  	
-  	const socket = io("ws://192.168.8.166:3000",{path: '/ws',});
-  	
-  	socket.on('connect', () => {
-    	console.log('SocketConnected!');
-	});
+ 	<script>
+		  let countDownBool;
+		  let bgColor;
 	
-	socket.on('message', (data) => {
-    	const { type, message } = data;
-    	//console.log(type);
-    	
-    	if (type == "currentTime") {
-    		document.getElementById("currentTime").textContent = message;
-    		
-    		if (countDownBool){
-    			//style.display = "block"; style.display = "none";
-    			document.getElementById("currentTime").style.display = "none";
-    			document.getElementById("title").style.display = "block";
-	    		document.getElementById("time").style.display = "block";
-    			
-    		}else{
-    			document.getElementById("currentTime").style.display = "block";
-    			document.getElementById("title").style.display = "none";
-	    		document.getElementById("time").style.display = "none";
-    		}
-    		//console.log("currentTime");
-        	
-		}
-		
-	    if (type == "countDown") {
-	    	document.getElementById("title").textContent = message.title;
-	   	 	document.getElementById("time").textContent = message.time;
+	  	var ipAdress = localStorage.getItem(localStorage.key("ipAdress"))
+	  	console.log(ipAdress)
+	  	var ipString = `ws://`+ipAdress
+	  	console.log(ipString)
+        ipAdress.textContent = localStorage.getItem(localStorage.key("ipAdress"))
+        
+        
+	  	const socket = io(ipString,{path: '/ws',});
+	  	
+	  	
+	  	socket.on('connect', () => {
+	    	console.log('SocketConnected!');
+	    	document.getElementById("ipInput").style.display = "none";
 	    	
-	    	if(message.bool){
-	    		countDownBool = true;
-	    		
-	    		
-	    		if (message.countDownTimeInMS > (-3*60000) && message.countDownTimeInMS < 0) {
-		         	bgColor = message.colors.countDownColor;
-		        }else if(message.countDownTimeInMS > 0){
-		          	bgColor = message.colors.countUpColor;
-		        }
-		        
-        		//-------------------
-			      if(message.countDownTimeInMS > (-5*60000) && message.countDownTimeInMS < (-5*60000+1000)){
-			        navigator.vibrate([100, 100, 100, 100, 100, 100, 100, 100, 100, 100]);
-			      }
-			      if(message.countDownTimeInMS > (-4*60000) && message.countDownTimeInMS < (-4*60000+1000)){
-			        navigator.vibrate([100, 100, 100, 100, 100, 100, 100, 100]);
-			      }
-			      if(message.countDownTimeInMS > (-3*60000) && message.countDownTimeInMS < (-3*60000+1000)){
-			         navigator.vibrate([100, 100, 100, 100, 100, 100]);
-			      }
-			      if(message.countDownTimeInMS > (-2*60000) && message.countDownTimeInMS < (-2*60000+1000)){
-			         navigator.vibrate([100, 100, 100, 100]);
-			      }
-			      if(message.countDownTimeInMS > (-1*60000) && message.countDownTimeInMS < (-1*60000+1000)){
-			         navigator.vibrate([100, 100]);
-			      }
-			      if(message.countDownTimeInMS > (0) && message.countDownTimeInMS < (0+1000)){
-			         navigator.vibrate([1000, 100, 1000, 100]);
-			      }
-		      	//-------------------
-		        
-	    	}else{
-	    		countDownBool = false;
-	    		document.body.style.backgroundColor = "2b2b2b";
-	    	}
-
-	    }
-	});
+	    	
+		});
 		
-  	
-  	
-  
-  </script>
+		socket.on('message', (data) => {
+	    	const { type, message } = data;
+	    	//console.log(type);
+	    	
+	    	if (type == "currentTime") {
+	    		document.getElementById("currentTime").textContent = message;
+	    		
+	    		if (countDownBool){
+	    			//style.display = "block"; style.display = "none";
+	    			document.getElementById("currentTime").style.display = "none";
+	    			document.getElementById("title").style.display = "block";
+		    		document.getElementById("time").style.display = "block";
+	    			
+	    		}else{
+	    			document.getElementById("currentTime").style.display = "block";
+	    			document.getElementById("title").style.display = "none";
+		    		document.getElementById("time").style.display = "none";
+	    		}
+	    		//console.log("currentTime");
+	        	
+			}
+			
+		    if (type == "countDown") {
+		    	document.getElementById("title").textContent = message.title;
+		   	 	document.getElementById("time").textContent = message.time;
+		    	
+		    	if(message.bool){
+		    		countDownBool = true;
+		    		
+		    		
+		    		if (message.countDownTimeInMS > (-3*60000) && message.countDownTimeInMS < 0) {
+			         	bgColor = message.colors.countDownColor;
+			        }else if(message.countDownTimeInMS > 0){
+			          	bgColor = message.colors.countUpColor;
+			        }
+			        
+	        		//-------------------
+				      if(message.countDownTimeInMS > (-5*60000) && message.countDownTimeInMS < (-5*60000+1000)){
+				      console.log("Vibrate 5");
+				        navigator.vibrate([100, 100, 100, 100, 100, 100, 100, 100, 100, 100]);
+				      }
+				      if(message.countDownTimeInMS > (-4*60000) && message.countDownTimeInMS < (-4*60000+1000)){
+				      console.log("Vibrate 4");
+				        navigator.vibrate([100, 100, 100, 100, 100, 100, 100, 100]);
+				      }
+				      if(message.countDownTimeInMS > (-3*60000) && message.countDownTimeInMS < (-3*60000+1000)){
+				      console.log("Vibrate 3");
+				         navigator.vibrate([100, 100, 100, 100, 100, 100]);
+				      }
+				      if(message.countDownTimeInMS > (-2*60000) && message.countDownTimeInMS < (-2*60000+1000)){
+				      console.log("Vibrate 2");
+				         navigator.vibrate([100, 100, 100, 100]);
+				      }
+				      if(message.countDownTimeInMS > (-1*60000) && message.countDownTimeInMS < (-1*60000+1000)){
+				      console.log("Vibrate 1");
+				         navigator.vibrate([100, 100]);
+				      }
+				      if(message.countDownTimeInMS > (0) && message.countDownTimeInMS < (0+1000)){
+				      console.log("Vibrate START");
+				         navigator.vibrate([1000, 100, 1000, 100]);
+				      }
+			      	//-------------------
+			        
+		    	}else{
+		    		countDownBool = false;
+		    		document.body.style.backgroundColor = "2b2b2b";
+		    	}
+	
+		    }
+		});
+	  	
+	</script>
+	
+	<script>
+	    function addStorage() {
+	        //var key = document.getElementById('storageKey');
+	        var key = "ipAdress";
+	        var data = document.getElementById('storageData');
+	        
+	
+	        /* Set the local storage item */
+	        if ('localStorage' in window) {
+	            localStorage.setItem(key.value, data.value);
+	            location.reload();
+	        } else {
+	            alert('no localStorage in window');
+	        }
+	
+	        /* Set the session storage item */
+	        if ('sessionStorage' in window) {
+	            sessionStorage.setItem(key.value, data.value);
+	            location.reload();
+	        } else {
+	            alert('no sessionStorage in window');
+	        }
+	    }
+	</script>
+
 </html>

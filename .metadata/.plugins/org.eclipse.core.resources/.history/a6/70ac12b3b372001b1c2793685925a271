@@ -1,4 +1,0 @@
-
-console.log("Socket.js -> File");
-
-console.log(Document.getElementById("currentTime").innerHTML);

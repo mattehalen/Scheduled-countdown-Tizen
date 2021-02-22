@@ -1,3 +1,0 @@
-
-console.log("Socket.js -> File");
-document.getElementById("currentTime").textContent = "Test";

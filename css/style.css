@@ -18,6 +18,9 @@ body {
 .centerContainer{
 	text-align: center;
 }
+.inputContainer{
+	width: 95vw;
+}
 
 div{
 	/* font-size:10vh; */

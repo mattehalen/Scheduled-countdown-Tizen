@@ -7,30 +7,40 @@
 <DigestValue>Ks2oq/LoXpahu3xBPH/OyC44/502G2xMbyPFxSJiORbvJcvmn1+9zLqCHCjS4MjeHeaC06GMQ5+X
 bQahIXhDjw==</DigestValue>
 </Reference>
+<Reference URI=".gitignore">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"></DigestMethod>
+<DigestValue>ZpcHCA9LvChrVjGYcN1WT4gTezi3H2Sq3cMptAwKXqGZ2ax3XFoEW0xgfe6Nf0Dh9a+hHEUwnzgH
+tgs/MJDxDw==</DigestValue>
+</Reference>
 <Reference URI="BasicUI.wgt">
 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"></DigestMethod>
 <DigestValue>YeXTvo+tfrGrlGgbmjqpyj8BA0hNnuP/WxeFHxPo9CwbFl5anPPYmi5N9SRDoq6MqNndnbw+WHNY
 BLilglYo3Q==</DigestValue>
 </Reference>
+<Reference URI="README.md">
+<DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"></DigestMethod>
+<DigestValue>6uA/Nz17B931OVOflvog7FBzkrQW7HOHT+wjtiOYruBbWbbrFaMykfoCMO5jyFz12orvkwblyStN
+zzo2lqqxhw==</DigestValue>
+</Reference>
 <Reference URI="config.xml">
 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"></DigestMethod>
-<DigestValue>HPlJ+iUzrA35WFKB48wYgHPxwgDPv0aO8fKeI1P5ZpSRGTmOie7h3muiQQfX8IDqPx6tpR60i75a
-9sRtdYT7Hg==</DigestValue>
+<DigestValue>HvfSoCF6wMpMZepj40e8LY3OoYDSVFE+Zc7ET449xNUe0SQoN1OrRfXAzDjFIzTIuXm2AL70YX8t
+eEJYNDx49Q==</DigestValue>
 </Reference>
 <Reference URI="css%2Fstyle.css">
 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"></DigestMethod>
-<DigestValue>nBicTzHkzjNTVqmBmXhurdzaSh4GPLioAbkOXD+HBHiuRKG6N97kgDPGV72yrKN6OftfQBje8Dlt
-NHJBaWDNVw==</DigestValue>
+<DigestValue>x8AWNpIFebY8BloE1vBTqhVJ5lJejp2wOWmzALyJEgh1RpwOyGBqOc4+DZEa+2D140xR2eh0LDUV
+JCfcBSf6tQ==</DigestValue>
 </Reference>
 <Reference URI="icon.png">
 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"></DigestMethod>
-<DigestValue>k1ef9l+NACTjKWvwA501yLgZTQP++iPhnN0Ha9wzLA2r91fZx82RcAzqX87K89NEqZxYCuQkhyZX
-k4lcCncZWQ==</DigestValue>
+<DigestValue>iciLajSRQ9FPns/jCMGDbcEIetsGszq9E3mYdisBJp6oPL8GTnKvi2IlpsyZpvQLwuwiqH4SfDzb
+QFRVmVSkyg==</DigestValue>
 </Reference>
 <Reference URI="index.html">
 <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"></DigestMethod>
-<DigestValue>U0H6x/aLmKrDNhfeqqEsPcmQNHnVoFordVXk/RuqtWiq4EP9JiYV5rui/R3Ddk+4WnSmhokoCa/e
-ABvKs7Uthg==</DigestValue>
+<DigestValue>76ABUGRz0zDh/mZCWZOKpl5e4J0+s0WG8o16V8XWjFhcdJT0UVjMwa9jn6rmDdHY7rXQqFS99c4w
++ZtJGx/8gQ==</DigestValue>
 </Reference>
 <Reference URI="#prop">
 <Transforms>
@@ -42,9 +52,9 @@ QY10fG1EWQ==</DigestValue>
 </Reference>
 </SignedInfo>
 <SignatureValue>
-JuiiqT9TpbfGB5f86ZH1m+mryb7WB1/cLWKes/dRru8xEmYStEOvwWmYQmhscGoHSLzzKOoez5nB
-FNZ9s3DCy/P+Y2wTwY6i3JucnpwQnFhFzk1S1FfRqNQnWmCccqZ4nbnefaVnEHZtGrpErWlbJgb7
-bpfzM31cRiN7UqvY60c=
+AyKWNWZLDiJApj0VVjy5Es1SWsYXI3ZGN9AvJ7vpFBupmW7I/TNShMfEgEhqzTVlX83JnyYfwmkK
+Q6JcZATPCVCW0nfpcbNs22Pue/VLxIBajQGxxWku0BvO5F/65EzzRbQYs7lf0wdPCQf/nrL6aoTG
+QCwi030gJnGKlGku5xI=
 </SignatureValue>
 <KeyInfo>
 <X509Data>

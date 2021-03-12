@@ -1,156 +1,179 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="description" content="Scheduled-countdown"/>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<meta name="description" content="Scheduled-countdown" />
 
-    <title>Scheduled-countdown</title>
+	<title>Scheduled-countdown</title>
 
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>     
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 
 <body>
-  <div class=container>
-  	
-  	
-	<div class=centerContainer>
-		<div id=ipInput style="height:100%">
-<!-- 		  	Storage key:
-		   <input type="text" id="storageKey" style="width: 50px"/> -->
-		   ipAdress:
-		   <input type="text" id="storageData" style="width: 50%"/>
-		   <input type="button" id="save" value="SAVE" onclick="addStorage(); return false;"/>
-		   <h1 id="ipAdress">No Save ipAdress</h1>
-	  	</div>
-	  	
-	  	
-	  	
-		<div id="currentTime"></div>
-		<div id="title"></div>
-		<div id="time"></div>
+	<div class=container>
+
+
+		<div class=centerContainer>
+			<div class=inputContainer id=ipInput>
+				<div style="width: 25%;float:left;text-align: right;">
+					ipAdress:
+				</div>
+				<div>
+					<input type="text" id="saveIP" style="width: 70%" />
+				</div>
+				<div style="width: 25%;float:left;text-align: right;">
+					port:
+				</div>
+				<div>
+					<input type="text" id="savePort" style="width: 70%" />
+				</div>
+				<input type="button" id="save" value="SAVE" style="width: 100%; height: 10vh;" onclick="addStorage(); return false;" />
+				
+				<div style="text-align: center">
+					<P id="ipAdress">No Saved ipAdress</P>
+					<P id="port">No Saved port</p>
+				</div>
+			</div>
+
+
+
+			<div id="currentTime"></div>
+			<div id="title"></div>
+			<div id="time"></div>
+		</div>
 	</div>
-  </div>  
 
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
- 	<script>
-		  let countDownBool;
-		  let bgColor;
-	
-	  	var ipAdress = localStorage.getItem(localStorage.key("ipAdress"))
-	  	console.log(ipAdress)
-	  	var ipString = `ws://`+ipAdress
-	  	console.log(ipString)
-        ipAdress.textContent = localStorage.getItem(localStorage.key("ipAdress"))
-        
-        
-	  	const socket = io(ipString,{path: '/ws',});
-	  	
-	  	
-	  	socket.on('connect', () => {
-	    	console.log('SocketConnected!');
-	    	document.getElementById("ipInput").style.display = "none";
-	    	
-	    	
-		});
-		
-		socket.on('message', (data) => {
-	    	const { type, message } = data;
-	    	//console.log(type);
-	    	
-	    	if (type == "currentTime") {
-	    		document.getElementById("currentTime").textContent = message;
-	    		
-	    		if (countDownBool){
-	    			//style.display = "block"; style.display = "none";
-	    			document.getElementById("currentTime").style.display = "none";
-	    			document.getElementById("title").style.display = "block";
-		    		document.getElementById("time").style.display = "block";
-	    			
-	    		}else{
-	    			document.getElementById("currentTime").style.display = "block";
-	    			document.getElementById("title").style.display = "none";
-		    		document.getElementById("time").style.display = "none";
-	    		}
-	    		//console.log("currentTime");
-	        	
+<script>
+	let countDownBool;
+	let bgColor;
+
+	var ipAdress 	= localStorage["ipAdress"]
+	var port 		= localStorage["port"]
+
+	// console.log(ipAdress)
+	// console.log(port)
+
+	var ipString = `ws://` + ipAdress + `:` + port
+	console.log(ipString)
+
+
+	ipAdress.textContent 	= localStorage["ipAdress"]
+	port.textContent 		= localStorage["port"]
+
+
+	const socket = io(ipString, {
+		path: '/ws',
+	});
+
+
+	socket.on('connect', () => {
+		console.log('SocketConnected!');
+		document.getElementById("ipInput").style.display = "none";
+
+
+	});
+
+	socket.on('message', (data) => {
+		const {
+			type,
+			message
+		} = data;
+		//console.log(type);
+
+		if (type == "currentTime") {
+			document.getElementById("currentTime").textContent = message;
+
+			if (countDownBool) {
+				//style.display = "block"; style.display = "none";
+				document.getElementById("currentTime").style.display = "none";
+				document.getElementById("title").style.display = "block";
+				document.getElementById("time").style.display = "block";
+
+			} else {
+				document.getElementById("currentTime").style.display = "block";
+				document.getElementById("title").style.display = "none";
+				document.getElementById("time").style.display = "none";
 			}
-			
-		    if (type == "countDown") {
-		    	document.getElementById("title").textContent = message.title;
-		   	 	document.getElementById("time").textContent = message.time;
-		    	
-		    	if(message.bool){
-		    		countDownBool = true;
-		    		
-		    		
-		    		if (message.countDownTimeInMS > (-3*60000) && message.countDownTimeInMS < 0) {
-			         	bgColor = message.colors.countDownColor;
-			        }else if(message.countDownTimeInMS > 0){
-			          	bgColor = message.colors.countUpColor;
-			        }
-			        
-	        		//-------------------
-				      if(message.countDownTimeInMS > (-5*60000) && message.countDownTimeInMS < (-5*60000+1000)){
-				      console.log("Vibrate 5");
-				        navigator.vibrate([100, 100, 100, 100, 100, 100, 100, 100, 100, 100]);
-				      }
-				      if(message.countDownTimeInMS > (-4*60000) && message.countDownTimeInMS < (-4*60000+1000)){
-				      console.log("Vibrate 4");
-				        navigator.vibrate([100, 100, 100, 100, 100, 100, 100, 100]);
-				      }
-				      if(message.countDownTimeInMS > (-3*60000) && message.countDownTimeInMS < (-3*60000+1000)){
-				      console.log("Vibrate 3");
-				         navigator.vibrate([100, 100, 100, 100, 100, 100]);
-				      }
-				      if(message.countDownTimeInMS > (-2*60000) && message.countDownTimeInMS < (-2*60000+1000)){
-				      console.log("Vibrate 2");
-				         navigator.vibrate([100, 100, 100, 100]);
-				      }
-				      if(message.countDownTimeInMS > (-1*60000) && message.countDownTimeInMS < (-1*60000+1000)){
-				      console.log("Vibrate 1");
-				         navigator.vibrate([100, 100]);
-				      }
-				      if(message.countDownTimeInMS > (0) && message.countDownTimeInMS < (0+1000)){
-				      console.log("Vibrate START");
-				         navigator.vibrate([1000, 100, 1000, 100]);
-				      }
-			      	//-------------------
-			        
-		    	}else{
-		    		countDownBool = false;
-		    		document.body.style.backgroundColor = "2b2b2b";
-		    	}
-	
-		    }
-		});
-	  	
-	</script>
-	
-	<script>
-	    function addStorage() {
-	        //var key = document.getElementById('storageKey');
-	        var key = "ipAdress";
-	        var data = document.getElementById('storageData');
-	        
-	
-	        /* Set the local storage item */
-	        if ('localStorage' in window) {
-	            localStorage.setItem(key.value, data.value);
-	            location.reload();
-	        } else {
-	            alert('no localStorage in window');
-	        }
-	
-	        /* Set the session storage item */
-	        if ('sessionStorage' in window) {
-	            sessionStorage.setItem(key.value, data.value);
-	            location.reload();
-	        } else {
-	            alert('no sessionStorage in window');
-	        }
-	    }
-	</script>
+			//console.log("currentTime");
+
+		}
+
+		if (type == "countDown") {
+			document.getElementById("title").textContent = message.title;
+			document.getElementById("time").textContent = message.time;
+
+			if (message.bool) {
+				countDownBool = true;
+
+
+				if (message.countDownTimeInMS > (-3 * 60000) && message.countDownTimeInMS < 0) {
+					bgColor = message.colors.countDownColor;
+				} else if (message.countDownTimeInMS > 0) {
+					bgColor = message.colors.countUpColor;
+				}
+
+				//-------------------
+				if (message.countDownTimeInMS > (-5 * 60000) && message.countDownTimeInMS < (-5 * 60000 + 1000)) {
+					console.log("Vibrate 5");
+					navigator.vibrate([100, 100, 100, 100, 100, 100, 100, 100, 100, 100]);
+				}
+				if (message.countDownTimeInMS > (-4 * 60000) && message.countDownTimeInMS < (-4 * 60000 + 1000)) {
+					console.log("Vibrate 4");
+					navigator.vibrate([100, 100, 100, 100, 100, 100, 100, 100]);
+				}
+				if (message.countDownTimeInMS > (-3 * 60000) && message.countDownTimeInMS < (-3 * 60000 + 1000)) {
+					console.log("Vibrate 3");
+					navigator.vibrate([100, 100, 100, 100, 100, 100]);
+				}
+				if (message.countDownTimeInMS > (-2 * 60000) && message.countDownTimeInMS < (-2 * 60000 + 1000)) {
+					console.log("Vibrate 2");
+					navigator.vibrate([100, 100, 100, 100]);
+				}
+				if (message.countDownTimeInMS > (-1 * 60000) && message.countDownTimeInMS < (-1 * 60000 + 1000)) {
+					console.log("Vibrate 1");
+					navigator.vibrate([100, 100]);
+				}
+				if (message.countDownTimeInMS > (0) && message.countDownTimeInMS < (0 + 1000)) {
+					console.log("Vibrate START");
+					navigator.vibrate([1000, 100, 1000, 100]);
+				}
+				//-------------------
+
+			} else {
+				countDownBool = false;
+				document.body.style.backgroundColor = "2b2b2b";
+			}
+
+		}
+	});
+</script>
+
+<script>
+	function addStorage() {
+		var key_ip = "ipAdress";
+		var data_ip = document.getElementById('saveIP');
+		var key_port = "port"
+		var data_port = document.getElementById('savePort');
+
+		console.log("addStorage data_ip = ");
+		console.log(data_ip.value);
+		console.log("addStorage data_port = ");
+		console.log(data_port.value);
+
+
+		/* Set the local storage item */
+		if ('localStorage' in window) {
+			localStorage[key_ip] = data_ip.value;
+			localStorage[key_port] = data_port.value;
+			location.reload();
+		} else {
+			alert('no localStorage in window');
+		}
+	}
+</script>
 
 </html>

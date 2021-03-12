@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="https://github.com/mattehalen/Scheduled-countdown" version="1.0.0" viewmodes="maximized">
-    <access origin="https://cdnjs.cloudflare.com" subdomains="true"></access>
+    <access origin="https://cdnjs.cloudflare.com" subdomains="true"/>
+    <access origin="*" subdomains="true"/>
     <tizen:application id="UrnxiknsEJ.BasicUI" package="UrnxiknsEJ" required_version="4.0"/>
     <author href="https://github.com/mattehalen/Scheduled-countdown" email="matte_halen@hotmail.com">Mathias Halén</author>
     <content src="index.html"/>
